@@ -1,8 +1,14 @@
 # 🏆 Brag CLI
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Vibe Coded](https://img.shields.io/badge/vibe-coded-ff69b4)](https://en.wikipedia.org/wiki/Vibe_coding)
+
 **Stop forgetting your wins. Start bragging.**
 
 A command-line tool with Raycast integration for tracking professional accomplishments. Perfect for performance reviews, 1:1s, and remembering that you actually *do* get stuff done.
+
+> 🎨 **This project was vibe-coded** - built with AI assistance on a creative coding journey. PRs and contributions are welcome!
 
 ## ✨ Features
 
@@ -130,7 +136,8 @@ Because when review season comes around, you'll thank yourself for having a reco
 
 - [INSTALL.md](INSTALL.md) - Detailed installation guide
 - [RAYCAST_INTEGRATION.md](RAYCAST_INTEGRATION.md) - Raycast extension setup
-- [DEVELOPMENT.md](DEVELOPMENT.md) - Contributing and development
+- [CONTRIBUTING.md](CONTRIBUTING.md) - How to contribute
+- [DEVELOPMENT.md](DEVELOPMENT.md) - Development setup
 - [ARCHITECTURE.md](ARCHITECTURE.md) - Technical deep-dive
 
 ## 🙏 Acknowledgments
