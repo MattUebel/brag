@@ -1,30 +1,37 @@
-# Brag CLI
+# 🏆 Brag CLI
 
-A command-line tool with Raycast integration for tracking professional accomplishments to support performance reviews.
+**Stop forgetting your wins. Start bragging.**
 
-## Features
+A command-line tool with Raycast integration for tracking professional accomplishments. Perfect for performance reviews, 1:1s, and remembering that you actually *do* get stuff done.
 
-- **Local-first**: Data stored in JSONL files on your machine (`~/.brag/data/`)
-- **CLI**: Simple commands to add, list, and export brags
-- **Raycast Integration**: Beautiful UI for quick capture and search
-- **AI-friendly**: JSONL format is perfect for LLM parsing and reporting
-- **Zero dependencies**: Python CLI uses only stdlib
+## ✨ Features
 
-## Quick Start
+- **📁 Local-first**: Your brags stay on your machine (`~/.brag/data/`)
+- **⚡ Lightning fast**: Add a brag in seconds from terminal or Raycast
+- **🤖 AI-friendly**: JSONL format is perfect for LLM analysis
+- **🎨 Raycast UI**: Beautiful interface for quick capture and search
+- **📦 Zero dependencies**: Python CLI uses only stdlib
 
-### CLI Installation
+## 🚀 Quick Start
+
+### Install the CLI
 
 ```bash
-# Install the package
+# Clone and install
+git clone <repo-url>
+cd brag
 pip3 install -e .
 
-# Add to PATH (run once)
+# Set up your shell (one-time)
 chmod +x setup_shell.sh
 ./setup_shell.sh
 source ~/.zshrc  # or ~/.bashrc
+
+# 🎉 You're ready to brag!
+brag add "Set up the brag CLI - already winning!"
 ```
 
-### Raycast Extension
+### Install Raycast Extension (Optional)
 
 ```bash
 cd raycast-extension
@@ -32,39 +39,55 @@ npm install
 npm run dev  # Starts dev server and imports into Raycast
 ```
 
-## Usage
+## 📝 Usage
 
-### Add a brag
-```bash
-brag add "Shipped the new auth service" --tags feature --project auth
-```
+### Record your wins
 
-### Open editor for multi-line entry
 ```bash
+# Quick brag
+brag add "Shipped the new auth service"
+
+# With metadata
+brag add "Fixed critical bug in prod" --tags bug,urgent --project payments
+
+# Multi-line (opens your editor)
 brag add --edit
 ```
 
-### List recent brags
+### Review your accomplishments
+
 ```bash
-brag list              # Last 7 days
-brag list --days 30    # Last 30 days
+# What did I do this week?
+brag list
+
+# What about this month?
+brag list --days 30
 ```
 
-### Export brags
+### Export for performance reviews
+
 ```bash
+# Get everything as JSON (great for AI analysis)
 brag export --format json
+
+# Markdown for docs
 brag export --format markdown --start 2024-01-01
+
+# Just Q4
+brag export --start 2024-10-01 --end 2024-12-31
 ```
 
-## Data Storage
+## 🗂️ Data Storage
 
-Brags are stored as JSONL files organized by date:
+Your brags live in `~/.brag/data/` organized by date:
+
 ```
 ~/.brag/data/
   2025/
     12/
-      09.jsonl
+      09.jsonl  ← One file per day
       10.jsonl
+      11.jsonl
 ```
 
 Each entry is a single JSON line:
@@ -72,9 +95,23 @@ Each entry is a single JSON line:
 {"timestamp": "2025-12-09T17:00:00Z", "content": "Shipped auth service", "tags": ["feature"], "project": "auth"}
 ```
 
-## Documentation
+## 🎯 Why Brag?
 
-- [INSTALL.md](INSTALL.md) - Detailed installation instructions
-- [RAYCAST_INTEGRATION.md](RAYCAST_INTEGRATION.md) - Raycast extension setup and usage
-- [DEVELOPMENT.md](DEVELOPMENT.md) - Development setup and testing
-- [ARCHITECTURE.md](ARCHITECTURE.md) - Technical architecture and design decisions
+Because when review season comes around, you'll thank yourself for having a record of:
+- That bug you fixed at 2am
+- The feature that seemed small but took a week
+- The time you helped onboard the new team member
+- All those "quick" tasks that added up
+
+**Your future self will thank you. Start bragging today.**
+
+## 📚 Documentation
+
+- [INSTALL.md](INSTALL.md) - Detailed installation guide
+- [RAYCAST_INTEGRATION.md](RAYCAST_INTEGRATION.md) - Raycast extension setup
+- [DEVELOPMENT.md](DEVELOPMENT.md) - Contributing and development
+- [ARCHITECTURE.md](ARCHITECTURE.md) - Technical deep-dive
+
+---
+
+*Built with ❤️ for developers who forget how awesome they are.*

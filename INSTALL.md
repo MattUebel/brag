@@ -1,85 +1,123 @@
-# Installation Guide
+# 🏆 Installation Guide
+
+Get ready to never forget your accomplishments again!
 
 ## Prerequisites
 
-- Python 3.8+
+- Python 3.8+ *(you probably already have this)*
 - pip3
-- Raycast (optional, for UI integration)
-- Node.js and npm (optional, required for Raycast extension development)
+- Raycast *(optional, but highly recommended for the ✨ experience)*
+- Node.js + npm *(only needed for Raycast extension)*
 
-## CLI Installation
+## 🚀 CLI Installation
 
-1. Clone the repository:
-   ```bash
-   git clone <repo-url>
-   cd brag
-   ```
+### 1. Clone the repository
 
-2. Install the package:
-   ```bash
-   pip3 install -e .
-   ```
-   
-   > **Note:** If `pip install -e .` fails with an error about `setup.py`, the project includes a minimal `setup.py` shim for compatibility. If you still have issues, try upgrading pip first: `pip3 install --upgrade pip setuptools wheel`
+```bash
+git clone <repo-url>
+cd brag
+```
 
-3. Setup shell integration (adds `brag` to PATH):
-   ```bash
-   chmod +x setup_shell.sh
-   ./setup_shell.sh
-   source ~/.zshrc  # or ~/.bashrc
-   ```
+### 2. Install the package
 
-4. Verify installation:
-   ```bash
-   brag --help
-   ```
+```bash
+pip3 install -e .
+```
 
-   If `brag` is still not found, the CLI was likely installed to `~/Library/Python/3.X/bin/brag` (on macOS). You can run it directly with the full path, or ensure that directory is in your PATH.
+> **Note:** If you get an error about `setup.py`, try upgrading pip first:
+> ```bash
+> pip3 install --upgrade pip setuptools wheel
+> ```
 
-## Raycast Extension Installation
+### 3. Set up your shell
 
-1. Navigate to the extension directory:
-   ```bash
-   cd raycast-extension
-   ```
+```bash
+chmod +x setup_shell.sh
+./setup_shell.sh
+source ~/.zshrc  # or ~/.bashrc
+```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+### 4. Verify it works
 
-3. **Start the development server** (recommended):
-   ```bash
-   npm run dev
-   ```
-   
-   This will:
-   - Build the extension
-   - Auto-import it into Raycast
-   - Hot-reload on file changes
-   - Handle TypeScript compilation more leniently
+```bash
+brag --help
+```
 
-   > **Note:** The Raycast application must be installed on your Mac. Get it from [raycast.com](https://raycast.com/).
+You should see the help output. If not, the CLI was installed to `~/Library/Python/3.X/bin/brag` (on macOS). Run `setup_shell.sh` again or add that directory to your PATH manually.
 
-4. **Alternative: Manual import**
-   - Open Raycast
-   - Run "Import Extension"
-   - Select the `raycast-extension` directory
+### 5. Record your first brag! 🎉
 
-## Troubleshooting
+```bash
+brag add "Set up the brag CLI - already winning!"
+```
 
-### CLI not found
-The `brag` CLI is installed to your Python user bin directory. Common locations:
-- macOS: `~/Library/Python/3.X/bin/brag`
-- Linux: `~/.local/bin/brag`
+---
 
-Run `setup_shell.sh` to add this to your PATH automatically.
+## 🎨 Raycast Extension Installation
 
-### Raycast extension can't find `brag`
-Raycast runs in a restricted shell environment without your custom PATH. The extension includes a `config.ts` file that searches common installation locations automatically. If `brag` is installed in a non-standard location, you may need to edit `raycast-extension/src/config.ts`.
+The Raycast extension gives you a beautiful UI for adding and searching brags without leaving your keyboard.
 
-### TypeScript build errors
-Use `npm run dev` instead of `npm run build`. The dev server is more lenient with TypeScript errors and works correctly even when strict type checking fails.
+### 1. Navigate to the extension
 
-See [RAYCAST_INTEGRATION.md](RAYCAST_INTEGRATION.md) for usage details.
-See [ARCHITECTURE.md](ARCHITECTURE.md) for technical details and gotchas.
+```bash
+cd raycast-extension
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Start the development server
+
+```bash
+npm run dev
+```
+
+This will:
+- ✅ Build the extension
+- ✅ Auto-import it into Raycast
+- ✅ Hot-reload on changes
+
+> **Important:** The [Raycast app](https://raycast.com/) must be installed on your Mac.
+
+### 4. Use it!
+
+Open Raycast and search for:
+- **"Add Brag"** - Quick capture
+- **"Search Brags"** - Find past wins
+- **"Recent Brags"** - Last 7/14/30/90 days
+- **"Export Brags"** - Generate reports
+
+---
+
+## 🔧 Troubleshooting
+
+### CLI not found after install
+
+The `brag` command lives in your Python user bin directory:
+- **macOS:** `~/Library/Python/3.X/bin/brag`
+- **Linux:** `~/.local/bin/brag`
+
+Run `./setup_shell.sh` to add this to your PATH automatically.
+
+### Raycast shows "command not found"
+
+Raycast runs in a restricted shell environment. The extension handles this automatically by searching common installation paths. If yours is non-standard, edit `raycast-extension/src/config.ts`.
+
+### TypeScript errors when building
+
+Use `npm run dev` instead of `npm run build`. The dev server is more forgiving and works correctly even with type warnings.
+
+---
+
+## 📚 Next Steps
+
+- [RAYCAST_INTEGRATION.md](RAYCAST_INTEGRATION.md) - Get the most out of Raycast
+- [DEVELOPMENT.md](DEVELOPMENT.md) - Want to contribute?
+- [ARCHITECTURE.md](ARCHITECTURE.md) - Curious how it works?
+
+---
+
+*Now go do something worth bragging about! 💪*
