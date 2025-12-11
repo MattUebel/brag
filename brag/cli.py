@@ -29,8 +29,29 @@ def open_editor(initial_content: str = "") -> str:
 def cmd_add(args, storage: BragStorage):
     content = " ".join(args.content) if args.content else ""
     
-    if args.edit or not content:
+    if args.edit:
+        # Explicit editor request
         content = open_editor(content)
+    elif not content:
+        # No content provided - prompt interactively (avoids shell escaping issues!)
+        if sys.stdin.isatty():
+            print("🏆 What did you accomplish? (Press Enter twice to save, Ctrl+C to cancel)")
+            lines = []
+            try:
+                while True:
+                    line = input()
+                    if line == "" and lines and lines[-1] == "":
+                        # Two empty lines = done
+                        lines.pop()  # Remove the trailing empty line
+                        break
+                    lines.append(line)
+                content = "\n".join(lines).strip()
+            except (KeyboardInterrupt, EOFError):
+                print("\nCancelled.")
+                sys.exit(0)
+        else:
+            # Non-interactive, read from stdin
+            content = sys.stdin.read().strip()
         
     if not content:
         print("Error: Empty content, aborting.")
@@ -42,7 +63,7 @@ def cmd_add(args, storage: BragStorage):
         project=args.project
     )
     storage.add_entry(entry)
-    print(f"Brag added for {entry.timestamp}")
+    print(f"✅ Brag added for {entry.timestamp}")
 
 def cmd_list(args, storage: BragStorage):
     if args.date:

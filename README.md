@@ -47,12 +47,19 @@ npm run dev  # Starts dev server and imports into Raycast
 # Quick brag
 brag add "Shipped the new auth service"
 
+# Interactive mode (avoids shell quoting issues!)
+brag add
+# 🏆 What did you accomplish? (Press Enter twice to save)
+
 # With metadata
-brag add "Fixed critical bug in prod" --tags bug,urgent --project payments
+brag add "Fixed critical bug" --tags bug,urgent --project payments
 
 # Multi-line (opens your editor)
 brag add --edit
 ```
+
+> 💡 **Tip:** If your shell gives you trouble with `!` or other special characters,
+> just run `brag add` with no arguments for interactive input!
 
 ### Review your accomplishments
 
