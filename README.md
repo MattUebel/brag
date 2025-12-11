@@ -133,6 +133,10 @@ Because when review season comes around, you'll thank yourself for having a reco
 - [DEVELOPMENT.md](DEVELOPMENT.md) - Contributing and development
 - [ARCHITECTURE.md](ARCHITECTURE.md) - Technical deep-dive
 
+## 🙏 Acknowledgments
+
+Thanks to [@gleeblezoid](https://github.com/gleeblezoid) for the original idea and the perfect name. The concept of a "brag document" for tracking accomplishments is brilliant, and this tool wouldn't exist without that inspiration.
+
 ---
 
 *Built with ❤️ for developers who forget how awesome they are.*
