@@ -1,10 +1,10 @@
 import { Action, ActionPanel, Form, showToast, Toast, useNavigation } from "@raycast/api";
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import { useState } from "react";
 import util from "util";
 import { getBragPath } from "./config";
 
-const execPromise = util.promisify(exec);
+const execFilePromise = util.promisify(execFile);
 
 interface FormValues {
   content: string;
@@ -19,16 +19,23 @@ export default function Command() {
   async function handleSubmit(values: FormValues) {
     setIsLoading(true);
     try {
-      const tags = values.tags
-        ? values.tags.split(",").map((t) => `--tags "${t.trim()}"`).join(" ")
-        : "";
-      const project = values.project ? `--project "${values.project}"` : "";
-      const content = values.content.replace(/"/g, '\\"'); // Simple escaping
+      const args = ["add", values.content];
+
+      if (values.tags) {
+        values.tags.split(",").forEach((t) => {
+          const trimmed = t.trim();
+          if (trimmed) {
+            args.push("--tags", trimmed);
+          }
+        });
+      }
+
+      if (values.project) {
+        args.push("--project", values.project);
+      }
 
       const bragPath = getBragPath();
-      const cmd = `${bragPath} add "${content}" ${tags} ${project}`;
-
-      await execPromise(cmd);
+      await execFilePromise(bragPath, args);
 
       showToast({
         style: Toast.Style.Success,
