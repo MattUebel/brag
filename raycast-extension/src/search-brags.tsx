@@ -2,6 +2,7 @@ import { Action, ActionPanel, List, showToast, Toast } from "@raycast/api";
 import { exec } from "child_process";
 import { useEffect, useState } from "react";
 import util from "util";
+import { getBragPath } from "./config";
 
 const execPromise = util.promisify(exec);
 
@@ -13,14 +14,15 @@ interface BragEntry {
 }
 
 export default function Command() {
-    const [entries, setEntries] = useState<BragEntry[]>([]);
+    const [entries, setEntries] = useState([] as BragEntry[]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function fetchEntries() {
             try {
-                const { stdout } = await execPromise("brag export --format json");
-                const data = JSON.parse(stdout);
+                const bragPath = getBragPath();
+                const { stdout } = await execPromise(`${bragPath} export --format json`);
+                const data = JSON.parse(stdout) as BragEntry[];
                 setEntries(data);
             } catch (error) {
                 showToast({
@@ -28,6 +30,7 @@ export default function Command() {
                     title: "Failed to load brags",
                     message: String(error),
                 });
+                setEntries([]);
             } finally {
                 setIsLoading(false);
             }

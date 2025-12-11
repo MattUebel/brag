@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es2022",
+        "lib": [
+            "es2022",
+            "dom"
+        ],
+        "module": "es2022",
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": false,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "noImplicitAny": false,
+        "paths": {
+            "@raycast/api": [
+                "./node_modules/@raycast/api"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

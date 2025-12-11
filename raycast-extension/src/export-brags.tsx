@@ -1,13 +1,14 @@
-import { Action, ActionPanel, Form, showToast, Toast, useNavigation } from "@raycast/api";
+import { Action, ActionPanel, Form, showToast, Toast, useNavigation, Clipboard } from "@raycast/api";
 import { exec } from "child_process";
 import { useState } from "react";
 import util from "util";
+import { getBragPath } from "./config";
 
 const execPromise = util.promisify(exec);
 
 interface FormValues {
-    start: string | null;
-    end: string | null;
+    start: Date | null;
+    end: Date | null;
     format: string;
 }
 
@@ -18,19 +19,14 @@ export default function Command() {
     async function handleSubmit(values: FormValues) {
         setIsLoading(true);
         try {
-            const start = values.start ? `--start ${new Date(values.start).toISOString().split("T")[0]}` : "";
-            const end = values.end ? `--end ${new Date(values.end).toISOString().split("T")[0]}` : "";
+            const start = values.start ? `--start ${values.start.toISOString().split("T")[0]}` : "";
+            const end = values.end ? `--end ${values.end.toISOString().split("T")[0]}` : "";
             const format = `--format ${values.format}`;
 
-            const cmd = `brag export ${start} ${end} ${format}`;
+            const bragPath = getBragPath();
+            const cmd = `${bragPath} export ${start} ${end} ${format}`;
             const { stdout } = await execPromise(cmd);
 
-            // Copy to clipboard is handled by Action.CopyToClipboard usually, but here we want to do it after generation?
-            // Or we can just return the output and let the user copy it?
-            // The architecture says "Auto-copy to clipboard".
-            // Raycast has a Clipboard API.
-
-            const { Clipboard } = require("@raycast/api");
             await Clipboard.copy(stdout);
 
             showToast({

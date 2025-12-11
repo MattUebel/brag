@@ -656,6 +656,125 @@ editor = os.environ.get("EDITOR", os.environ.get("VISUAL", "vim"))
 9. Each entry is valid JSON on one line
 10. No external dependencies in production code
 
+## Raycast Extension Gotchas
+
+When developing and deploying the Raycast extension, there are several critical issues to be aware of:
+
+### 1. Restricted Shell Environment (CRITICAL)
+
+**Problem:** Raycast extensions run in a very restricted shell environment that does NOT have access to the user's custom PATH. This means commands installed via `pip install --user` (like `brag`) will not be found.
+
+**Error Symptom:** `command not found: brag` when trying to run any command from the Raycast extension.
+
+**Solution:** Use absolute paths to the CLI executable. The extension includes a `config.ts` file that searches common installation locations:
+
+```typescript
+// Common installation locations checked:
+// - ~/Library/Python/3.X/bin/brag (macOS pip --user)
+// - ~/.local/bin/brag (pipx, Linux pip --user)
+// - /usr/local/bin/brag (system-wide pip)
+// - /opt/homebrew/bin/brag (Homebrew on Apple Silicon)
+```
+
+**Implementation:** All command files import `getBragPath()` from `config.ts` and use the full path:
+
+```typescript
+import { getBragPath } from "./config";
+const bragPath = getBragPath();
+const cmd = `${bragPath} add "content"`;
+```
+
+### 2. TypeScript/React Type Conflicts
+
+**Problem:** The `@raycast/api` package bundles its own `@types/react`, which can conflict with any `@types/react` installed at the project level, causing TypeScript errors like:
+- `TS2786: 'Component' cannot be used as a JSX component`
+- `Its type 'FunctionComponent<...>' is not a valid JSX element type`
+
+**Solution:** 
+- Use `npm run dev` instead of `npm run build` during development (it's more lenient)
+- Ensure `@types/react` version matches what `@raycast/api` expects
+- Use `skipLibCheck: true` in `tsconfig.json`
+
+### 3. Development vs Build Commands
+
+**Problem:** `npm run build` runs strict TypeScript checks that may fail even when the code works fine.
+
+**Solution:** Use `npm run dev` for development and testing. This command:
+- Compiles the extension
+- Imports it into Raycast automatically
+- Hot-reloads on file changes
+- Is more lenient with TypeScript errors
+
+### 4. Extension Import Location
+
+**Problem:** Raycast needs to know where to find the extension.
+
+**Solution:** Run `npm run dev` from the `raycast-extension` directory, or use Raycast's "Import Extension" command to manually import the extension directory.
+
+### 5. Environment Variables
+
+**Problem:** Raycast extensions don't have access to shell environment variables like `EDITOR`, `VISUAL`, or custom `PATH` additions from `.zshrc`/`.bashrc`.
+
+**Solution:** 
+- Don't rely on environment variables in the Raycast extension
+- Use hardcoded paths or path discovery (like `config.ts`)
+- For editor integration, use Raycast's built-in APIs instead of shell commands
+
+### 6. TypeScript Generic Syntax (Runtime Error)
+
+**Problem:** Using TypeScript generic syntax like `useState<Type[]>([])` can cause runtime errors in Raycast extensions, even though it compiles fine.
+
+**Error Symptom:** Runtime error pointing to the line with generic syntax, with a cryptic stack trace.
+
+**Solution:** Use type assertions instead of generic syntax:
+
+```typescript
+// DON'T DO THIS - may cause runtime errors:
+const [entries, setEntries] = useState<BragEntry[]>([]);
+
+// DO THIS INSTEAD:
+const [entries, setEntries] = useState([] as BragEntry[]);
+```
+
+### 7. Component Naming (List.Dropdown vs Dropdown)
+
+**Problem:** Some Raycast components are exported as sub-components of parent components, not as standalone exports.
+
+**Error Symptom:** `Cannot read properties of undefined` or `Module does not export 'Dropdown'`.
+
+**Solution:** Use the correct component hierarchy:
+
+```typescript
+// DON'T DO THIS:
+import { Dropdown } from "@raycast/api";
+<Dropdown>...</Dropdown>
+
+// DO THIS INSTEAD:
+import { List } from "@raycast/api";
+<List.Dropdown>...</List.Dropdown>
+```
+
+**Common sub-component patterns:**
+- `List.Item`, `List.Dropdown`, `List.Dropdown.Item`
+- `Form.TextField`, `Form.TextArea`, `Form.Dropdown`
+- `Action.CopyToClipboard`, `Action.OpenInBrowser`
+
+### 8. Error Handling in async useEffect
+
+**Problem:** If the CLI command fails (e.g., no data yet), the extension may crash.
+
+**Solution:** Always handle errors gracefully and set a fallback state:
+
+```typescript
+try {
+  const { stdout } = await execPromise(cmd);
+  setEntries(JSON.parse(stdout));
+} catch (error) {
+  showToast({ style: Toast.Style.Failure, title: "Error", message: String(error) });
+  setEntries([]);  // Set empty state, don't leave undefined
+}
+```
+
 ## Common Pitfalls to Avoid
 
 1. **Don't add unnecessary dependencies** - Use Python stdlib

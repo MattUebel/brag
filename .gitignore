@@ -41,14 +41,44 @@ dmypy.json
 # Raycast / Node
 node_modules/
 .DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Raycast extension build artifacts
+raycast-extension/dist/
+raycast-extension/.raycast/
 
 # Editors
 .idea/
 .vscode/
 *.swp
 *.swo
+*~
+.*.sw?
 
-# Project Specific
-# Ignore local data if user configures storage to be inside the repo
+# Environment files (never commit secrets!)
+.env
+.env.local
+.env.*.local
+*.local
+
+# Project Specific - User Data (IMPORTANT: Never commit personal brags!)
+# The default storage location is ~/.brag/data/, which is outside this repo.
+# But if someone configures storage inside the repo, this prevents accidental commits.
 data/
 *.jsonl
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
