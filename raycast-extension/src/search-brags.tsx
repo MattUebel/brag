@@ -1,10 +1,10 @@
 import { Action, ActionPanel, List, showToast, Toast } from "@raycast/api";
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import { useEffect, useState } from "react";
 import util from "util";
 import { getBragPath } from "./config";
 
-const execPromise = util.promisify(exec);
+const execFilePromise = util.promisify(execFile);
 
 interface BragEntry {
   content: string;
@@ -21,9 +21,11 @@ export default function Command() {
     async function fetchEntries() {
       try {
         const bragPath = getBragPath();
-        const { stdout } = await execPromise(
-          `${bragPath} export --format json`,
-        );
+        const { stdout } = await execFilePromise(bragPath, [
+          "export",
+          "--format",
+          "json",
+        ]);
         const data = JSON.parse(stdout) as BragEntry[];
         setEntries(data);
       } catch (error) {

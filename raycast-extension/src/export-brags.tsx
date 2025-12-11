@@ -7,12 +7,12 @@ import {
   useNavigation,
   Clipboard,
 } from "@raycast/api";
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import { useState } from "react";
 import util from "util";
 import { getBragPath } from "./config";
 
-const execPromise = util.promisify(exec);
+const execFilePromise = util.promisify(execFile);
 
 interface FormValues {
   start: Date | null;
@@ -27,17 +27,18 @@ export default function Command() {
   async function handleSubmit(values: FormValues) {
     setIsLoading(true);
     try {
-      const start = values.start
-        ? `--start ${values.start.toISOString().split("T")[0]}`
-        : "";
-      const end = values.end
-        ? `--end ${values.end.toISOString().split("T")[0]}`
-        : "";
-      const format = `--format ${values.format}`;
+      const args = ["export"];
+
+      if (values.start) {
+        args.push("--start", values.start.toISOString().split("T")[0]);
+      }
+      if (values.end) {
+        args.push("--end", values.end.toISOString().split("T")[0]);
+      }
+      args.push("--format", values.format);
 
       const bragPath = getBragPath();
-      const cmd = `${bragPath} export ${start} ${end} ${format}`;
-      const { stdout } = await execPromise(cmd);
+      const { stdout } = await execFilePromise(bragPath, args);
 
       await Clipboard.copy(stdout);
 
