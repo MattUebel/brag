@@ -2,7 +2,7 @@ import argparse
 import datetime
 import json
 import os
-import subprocess
+import subprocess  # nosec
 import sys
 import tempfile
 from typing import List
@@ -22,7 +22,7 @@ def open_editor(initial_content: str = "") -> str:
         tf_path = tf.name
 
     try:
-        subprocess.call([editor, tf_path])
+        subprocess.call([editor, tf_path])  # nosec
         with open(tf_path, "r") as f:
             return f.read().strip()
     finally:

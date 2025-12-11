@@ -1,4 +1,11 @@
-import { Action, ActionPanel, Form, showToast, Toast, useNavigation } from "@raycast/api";
+import {
+  Action,
+  ActionPanel,
+  Form,
+  showToast,
+  Toast,
+  useNavigation,
+} from "@raycast/api";
 import { execFile } from "child_process";
 import { useState } from "react";
 import util from "util";
@@ -68,11 +75,7 @@ export default function Command() {
         placeholder="What did you accomplish?"
         enableMarkdown
       />
-      <Form.TextField
-        id="project"
-        title="Project"
-        placeholder="Project name"
-      />
+      <Form.TextField id="project" title="Project" placeholder="Project name" />
       <Form.TextField
         id="tags"
         title="Tags"
