@@ -3,6 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Vibe Coded](https://img.shields.io/badge/vibe-coded-ff69b4)](https://en.wikipedia.org/wiki/Vibe_coding)
+[![CI](https://github.com/MattUebel/brag/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/MattUebel/brag/actions/workflows/ci.yml)
 
 **Stop forgetting your wins. Start bragging.**
 
