@@ -95,6 +95,20 @@ Each entry is a single JSON line:
 {"timestamp": "2025-12-09T17:00:00Z", "content": "Shipped auth service", "tags": ["feature"], "project": "auth"}
 ```
 
+## 🗑️ Uninstall
+
+Changed your mind? No hard feelings!
+
+```bash
+./uninstall.sh
+```
+
+This will:
+- Remove the CLI from pip
+- Clean up your shell PATH
+- Remove Raycast extension files
+- Optionally delete your brag data (you'll be asked)
+
 ## 🎯 Why Brag?
 
 Because when review season comes around, you'll thank yourself for having a record of:
