@@ -42,6 +42,8 @@
    npm install
    ```
 
+   > **Note:** The extension scripts (`npm run dev`, etc.) rely on the Raycast CLI, which is installed locally by `npm install`. However, running the extension itself requires the [Raycast application](https://raycast.com/) to be installed on your Mac.
+
 3. Import into Raycast:
    - Open Raycast
    - Run "Import Extension"
