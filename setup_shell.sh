@@ -48,12 +48,17 @@ if [ -n "$RC_FILE" ] && [ -f "$RC_FILE" ]; then
     fi
 fi
 
-# Informative only - let the user decide
-echo "📝 To run 'brag' from anywhere, add this line to your $RC_FILE:"
+# Not in PATH and not in RC file - Add it automatically
+echo "➕ Adding $BIN_DIR to $RC_FILE..."
+echo "" >> "$RC_FILE"
+echo "# 🏆 Brag CLI - Track your wins!" >> "$RC_FILE"
+echo "export PATH=\"\$PATH:$BIN_DIR\"" >> "$RC_FILE"
+
+echo "✅ Success! Added to your configuration."
 echo ""
-echo "   export PATH=\"\$PATH:$BIN_DIR\""
-echo ""
-echo "   Then run: source $RC_FILE"
+echo "📝 Next steps:"
+echo "   1. Run: source $RC_FILE"
+echo "   2. Try:  brag add \"Set up the brag CLI - my first win!\""
 echo ""
 echo "🎯 Pro tip: Use 'brag add --edit' for multi-line entries"
 echo ""
