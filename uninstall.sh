@@ -62,20 +62,15 @@ elif [ "$SHELL_NAME" = "bash" ]; then
 fi
 
 if [ -n "$RC_FILE" ] && [ -f "$RC_FILE" ]; then
-    if grep -q "# 🏆 Brag CLI" "$RC_FILE" || grep -q "# Added by brag-cli" "$RC_FILE"; then
-        echo "   Found brag PATH entries in $RC_FILE"
-        # Create backup
-        cp "$RC_FILE" "${RC_FILE}.brag-backup"
-        # Remove the lines (both old and new style comments)
-        sed -i '' '/# 🏆 Brag CLI/d' "$RC_FILE" 2>/dev/null || sed -i '/# 🏆 Brag CLI/d' "$RC_FILE"
-        sed -i '' '/# Added by brag-cli/d' "$RC_FILE" 2>/dev/null || sed -i '/# Added by brag-cli/d' "$RC_FILE"
-        # Remove PATH lines that contain Python user bin (be careful here)
-        sed -i '' '/Library\/Python.*\/bin/d' "$RC_FILE" 2>/dev/null || sed -i '/Library\/Python.*\/bin/d' "$RC_FILE"
-        echo -e "   ${GREEN}✅ Cleaned PATH entries from $RC_FILE${NC}"
-        echo "   📝 Backup saved to ${RC_FILE}.brag-backup"
-        CLEANED_PATH=true
+    if grep -q "brag" "$RC_FILE"; then
+        echo "   Found potential brag entries in $RC_FILE"
+        echo ""
+        echo -e "${YELLOW}⚠️  Action Required:${NC}"
+        echo "   Please open $RC_FILE and remove any lines related to 'brag' or 'brag-cli'."
+        echo "   Look for: export PATH=\"\$PATH:.../bin\""
     else
         echo "   No brag PATH entries found in $RC_FILE"
+        CLEANED_PATH=true
     fi
 fi
 
