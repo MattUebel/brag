@@ -1,12 +1,15 @@
-from dataclasses import dataclass, field, asdict
-from typing import List, Optional
 import datetime
 import json
+from dataclasses import asdict, dataclass, field
+from typing import List, Optional
+
 
 @dataclass
 class BragEntry:
     content: str
-    timestamp: str = field(default_factory=lambda: datetime.datetime.utcnow().isoformat() + "Z")
+    timestamp: str = field(
+        default_factory=lambda: datetime.datetime.utcnow().isoformat() + "Z"
+    )
     tags: List[str] = field(default_factory=list)
     project: Optional[str] = None
 

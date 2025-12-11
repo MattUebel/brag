@@ -1,8 +1,9 @@
-import os
+import datetime
 from pathlib import Path
 from typing import List, Optional
-import datetime
+
 from brag.models import BragEntry
+
 
 class BragStorage:
     def __init__(self, data_dir: Optional[str] = None):
@@ -23,7 +24,7 @@ class BragStorage:
     def add_entry(self, entry: BragEntry) -> None:
         file_path = self._get_file_path(entry.timestamp)
         file_path.parent.mkdir(parents=True, exist_ok=True)
-        
+
         with open(file_path, "a") as f:
             f.write(entry.to_json() + "\n")
 
@@ -49,21 +50,21 @@ class BragStorage:
         # start_date and end_date: YYYY-MM-DD
         start = datetime.date.fromisoformat(start_date)
         end = datetime.date.fromisoformat(end_date)
-        
+
         entries = []
         current = start
         while current <= end:
             date_str = current.isoformat()
             entries.extend(self.get_entries(date_str))
             current += datetime.timedelta(days=1)
-            
+
         return entries
 
     def list_available_dates(self) -> List[str]:
         dates = []
         if not self.data_dir.exists():
             return []
-            
+
         for year_dir in self.data_dir.iterdir():
             if not year_dir.is_dir():
                 continue
@@ -75,5 +76,5 @@ class BragStorage:
                     month = month_dir.name
                     day = day_file.stem
                     dates.append(f"{year}-{month}-{day}")
-        
+
         return sorted(dates)
