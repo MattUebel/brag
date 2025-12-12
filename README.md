@@ -38,6 +38,9 @@ source ~/.zshrc  # or ~/.bashrc
 brag add "Set up the brag CLI - already winning!"
 ```
 
+> **Note (macOS):** On a fresh Mac, running `python3` may trigger a prompt to install Xcode Command Line Tools.
+> Also, `setup_shell.sh` only updates your `PATH` — it does not install `brag` by itself.
+
 ### Install Raycast Extension (Optional)
 
 ```bash

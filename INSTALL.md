@@ -4,10 +4,15 @@ Get ready to never forget your accomplishments again!
 
 ## Prerequisites
 
-- Python 3.8+ *(you probably already have this)*
+- Python 3.8+ *(macOS often does **not** ship with it preinstalled)*
 - pip3
 - Raycast *(optional, but highly recommended for the ✨ experience)*
 - Node.js + npm *(only needed for Raycast extension)*
+
+### macOS note: Xcode Command Line Tools prompt
+
+On a fresh Mac, running `python3` (or `git`) may pop up a system prompt to install **Xcode Command Line Tools**.
+That’s normal — you can install them, or install Python separately (Homebrew or python.org) and use that `python3`.
 
 ## 🚀 CLI Installation
 
@@ -36,6 +41,8 @@ chmod +x setup_shell.sh
 ./setup_shell.sh
 source ~/.zshrc  # or ~/.bashrc
 ```
+
+> **Note:** `setup_shell.sh` only updates your `PATH`. It does **not** install the `brag` CLI by itself.
 
 ### 4. Verify it works
 
