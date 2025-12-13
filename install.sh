@@ -252,25 +252,43 @@ if [ "$install_raycast" = true ]; then
 
     # Raycast provides a shared node_modules for local extensions.
     raycast_node_modules="/Applications/Raycast.app/Contents/Resources/RaycastNodeExtensions_RaycastNodeExtensions.bundle/Contents/Resources/api/node_modules"
-    if [ -d "$raycast_node_modules" ] && [ ! -e "$raycast_extension_dir/node_modules" ]; then
-      ln -s "$raycast_node_modules" "$raycast_extension_dir/node_modules"
-    fi
+	    if [ -d "$raycast_node_modules" ] && [ ! -e "$raycast_extension_dir/node_modules" ]; then
+	      ln -s "$raycast_node_modules" "$raycast_extension_dir/node_modules"
+	    fi
 
-    pushd "$SCRIPT_DIR/raycast-extension" >/dev/null
-    npm ci
-    npx ray build -e dist -o "$raycast_brag_dir"
-    popd >/dev/null
+	    pushd "$SCRIPT_DIR/raycast-extension" >/dev/null
+	    npm ci
+	    npx ray build -e dist -o "$raycast_brag_dir"
+	    # Raycast discovers local/development extensions via a dev log marker.
+	    # `ray develop` creates this file; we create it here to make the extension appear
+	    # without having to keep a dev server running.
+	    touch "$raycast_brag_dir/dev.log"
 
-    # Raycast discovers local/development extensions via a dev log marker.
-    # `ray develop` creates this file; we create it here to make the extension appear
-    # without having to keep a dev server running.
-    touch "$raycast_brag_dir/dev.log"
+	    # On some fresh installs, Raycast won't show local extensions until they've been
+	    # imported at least once via `ray develop` (this is what `npm run dev` does).
+	    echo ""
+	    echo "🔌 Importing extension into Raycast (one-time)..."
+	    if [ "$(uname -s)" = "Darwin" ] && ! pgrep -x Raycast >/dev/null 2>&1; then
+	      echo "ℹ️  Raycast is not running; launching it..."
+	      open -a Raycast >/dev/null 2>&1 || true
+	      sleep 2
+	    fi
 
-    echo ""
-    echo "✅ Raycast extension built to: $raycast_brag_dir"
-    echo "   If Raycast is running, you may need to restart it to pick up the extension."
-  fi
-fi
+	    # Start dev mode briefly to trigger import, then stop it so we don't leave a watcher running.
+	    npx ray develop -I --exit-on-error >/dev/null 2>&1 &
+	    dev_pid=$!
+	    sleep 6
+	    if kill -0 "$dev_pid" >/dev/null 2>&1; then
+	      kill "$dev_pid" >/dev/null 2>&1 || true
+	    fi
+	    wait "$dev_pid" >/dev/null 2>&1 || true
+	    popd >/dev/null
+
+	    echo ""
+	    echo "✅ Raycast extension built to: $raycast_brag_dir"
+	    echo "   If it still doesn't appear, run: (cd raycast-extension && npm run dev)"
+	  fi
+	fi
 
 echo ""
 echo "🏆 Done. Start bragging:"
