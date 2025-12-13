@@ -261,6 +261,11 @@ if [ "$install_raycast" = true ]; then
     npx ray build -e dist -o "$raycast_brag_dir"
     popd >/dev/null
 
+    # Raycast discovers local/development extensions via a dev log marker.
+    # `ray develop` creates this file; we create it here to make the extension appear
+    # without having to keep a dev server running.
+    touch "$raycast_brag_dir/dev.log"
+
     echo ""
     echo "✅ Raycast extension built to: $raycast_brag_dir"
     echo "   If Raycast is running, you may need to restart it to pick up the extension."
