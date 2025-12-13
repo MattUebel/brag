@@ -9,6 +9,14 @@ The Brag Raycast extension provides a seamless way to track accomplishments with
 3. Run `npm run dev` to start the development server and auto-import the extension
 4. The extension will appear in Raycast immediately
 
+### Recommended (all-in-one)
+
+From the repo root, you can also run:
+
+```bash
+./install.sh --raycast
+```
+
 > **Important:** Use `npm run dev` (not `npm run build`). The dev server handles TypeScript compilation more leniently and hot-reloads on changes.
 
 ## Commands
@@ -67,7 +75,7 @@ These can be ignored. The extension works correctly at runtime via `npm run dev`
 
 ## Architecture Notes
 
-The extension calls the `brag` CLI via `child_process.exec()`. This approach:
+The extension calls the `brag` CLI via `child_process.execFile()`. This approach:
 - Keeps the CLI as the single source of truth
 - Ensures data consistency between CLI and Raycast
 - Avoids duplicating storage logic

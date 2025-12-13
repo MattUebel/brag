@@ -4,8 +4,8 @@ Get ready to never forget your accomplishments again!
 
 ## Prerequisites
 
-- Python 3.8+ *(macOS often does **not** ship with it preinstalled)*
-- pip3
+- [`uv`](https://astral.sh/uv) *(recommended)*
+- Python 3.8+ *(uv can manage this for you)*
 - Raycast *(optional, but highly recommended for the ✨ experience)*
 - Node.js + npm *(only needed for Raycast extension)*
 
@@ -23,28 +23,20 @@ git clone <repo-url>
 cd brag
 ```
 
-### 2. Install the package
+### 2. Install (recommended)
 
 ```bash
-pip3 install -e .
+chmod +x install.sh
+./install.sh
 ```
 
-> **Note:** If you get an error about `setup.py`, try upgrading pip first:
-> ```bash
-> pip3 install --upgrade pip setuptools wheel
-> ```
-
-### 3. Set up your shell
+If you don’t have `uv` installed yet, you can also run:
 
 ```bash
-chmod +x setup_shell.sh
-./setup_shell.sh
-source ~/.zshrc  # or ~/.bashrc
+./install.sh --install-uv
 ```
 
-> **Note:** `setup_shell.sh` only updates your `PATH`. It does **not** install the `brag` CLI by itself.
-
-### 4. Verify it works
+### 3. Verify it works
 
 ```bash
 brag --help
@@ -64,28 +56,11 @@ brag add "Set up the brag CLI - already winning!"
 
 The Raycast extension gives you a beautiful UI for adding and searching brags without leaving your keyboard.
 
-### 1. Navigate to the extension
+### Recommended (via installer)
 
 ```bash
-cd raycast-extension
+./install.sh --raycast
 ```
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-### 3. Start the development server
-
-```bash
-npm run dev
-```
-
-This will:
-- ✅ Build the extension
-- ✅ Auto-import it into Raycast
-- ✅ Hot-reload on changes
 
 > **Important:** The [Raycast app](https://raycast.com/) must be installed on your Mac.
 

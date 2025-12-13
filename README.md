@@ -21,32 +21,33 @@ A command-line tool with Raycast integration for tracking professional accomplis
 
 ## 🚀 Quick Start
 
-### Install the CLI
+### Install the CLI (Recommended: `uv`)
 
 ```bash
-# Clone and install
+# Clone
 git clone <repo-url>
 cd brag
-pip3 install -e .
 
-# Set up your shell (one-time)
-chmod +x setup_shell.sh
-./setup_shell.sh
-source ~/.zshrc  # or ~/.bashrc
+# Install (uses uv tool install under the hood)
+chmod +x install.sh
+./install.sh
 
 # 🎉 You're ready to brag!
 brag add "Set up the brag CLI - already winning!"
 ```
 
-> **Note (macOS):** On a fresh Mac, running `python3` may trigger a prompt to install Xcode Command Line Tools.
-> Also, `setup_shell.sh` only updates your `PATH` — it does not install `brag` by itself.
+> **Note:** If you don’t have `uv` installed yet, run `./install.sh --install-uv` (or install via Homebrew: `brew install uv`).
+
+> **Note (macOS):** On a fresh Mac, installing Python (or running `python3`) may trigger a prompt to install Xcode Command Line Tools.
 
 ### Install Raycast Extension (Optional)
 
 ```bash
-cd raycast-extension
-npm install
-npm run dev  # Starts dev server and imports into Raycast
+# Prompted install:
+./install.sh
+
+# Or fully automatic:
+./install.sh --raycast
 ```
 
 ## 📝 Usage
